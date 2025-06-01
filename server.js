@@ -9,79 +9,10 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(require("cors")());
 
-// Get related videos using search API with the original video's title
-// app.get("/related/:id", async (req, res) => {
-//   try {
-//     const videoId = req.params.id;
+app.get("/", (req, res) => {
+  res.send("🎵 YouTube Audio Stream & Download API");
+});
 
-//     // First, get the original video's title
-//     const videoInfo = await axios.get(
-//       `https://www.googleapis.com/youtube/v3/videos`,
-//       {
-//         params: {
-//           part: "snippet",
-//           id: videoId,
-//           key: YOUTUBE_API_KEY,
-//         },
-//       }
-//     );
-
-//     if (!videoInfo.data.items || videoInfo.data.items.length === 0) {
-//       throw new Error("Video not found");
-//     }
-
-//     const videoTitle = videoInfo.data.items[0].snippet.title;
-
-//     // Then search for related videos using the title
-//     const searchResults = await axios.get(
-//       `https://www.googleapis.com/youtube/v3/search`,
-//       {
-//         params: {
-//           part: "snippet",
-//           q: videoTitle,
-//           type: "video",
-//           maxResults: 10,
-//           key: YOUTUBE_API_KEY,
-//         },
-//       }
-//     );
-
-//     const relatedSongs = searchResults.data.items.map((item) => ({
-//       id: item.id.videoId,
-//       title: item.snippet.title,
-//       thumbnail: item.snippet.thumbnails.default.url,
-//     }));
-
-//     res.json(relatedSongs);
-//   } catch (error) {
-//     console.error("Error:", error.response?.data || error.message);
-
-//     // Fallback to yt-dlp if API fails
-//     const videoId = req.params.id;
-//     exec(
-//       `yt-dlp --flat-playlist --get-id "https://www.youtube.com/watch?v=${videoId}"`,
-//       (error, stdout, stderr) => {
-//         if (error) {
-//           return res.status(500).json({
-//             error: "Failed to fetch related songs",
-//             details: stderr || "Both methods failed",
-//           });
-//         }
-
-//         const relatedIds = stdout
-//           .trim()
-//           .split("\n")
-//           .filter((id) => id)
-//           .slice(0, 10);
-
-//         res.json({
-//           fallbackMethodUsed: true,
-//           relatedIds,
-//         });
-//       }
-//     );
-//   }
-// });
 function formatDuration(isoDuration) {
   if (!isoDuration) return "Unknown";
   const match = isoDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
