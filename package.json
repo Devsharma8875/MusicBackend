@@ -1,0 +1,30 @@
+{
+  "name": "youtube-audio-backend-pure",
+  "version": "1.0.0",
+  "description": "Pure Node.js backend API to extract audio from YouTube videos",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "ytdl-core": "^4.11.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "youtube",
+    "audio",
+    "extraction",
+    "api",
+    "backend",
+    "play-dl"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
