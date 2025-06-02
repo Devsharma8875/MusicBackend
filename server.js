@@ -159,21 +159,21 @@ function extractMovieAlbumName(title) {
 }
 app.get("/song/:id", (req, res) => {
   const videoId = req.params.id;
-  if (!videoId || videoId === "undefined") {
-    return res.status(400).json({ error: "Invalid YouTube video ID" });
-  }
-
   const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
-  exec(`yt-dlp -g -f "ba" "${youtubeUrl}"`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error: ${stderr}`);
-      return res.status(500).json({ error: "Failed to fetch audio URL" });
+  exec(
+    `yt-dlp --cookies youtube_cookies.txt -g -f "ba" "${youtubeUrl}"`,
+    (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error: ${stderr}`);
+        return res.status(500).json({ error: "Failed to fetch audio URL" });
+      }
+      const audioFormatHigh = stdout.trim();
+      res.json({ audioFormatHigh });
     }
-    const audioFormatHigh = stdout.trim();
-    res.json({ audioFormatHigh });
-  });
+  );
 });
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
